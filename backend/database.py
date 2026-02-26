@@ -1,5 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.pool import NullPool
+
 import os
 
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -9,8 +11,7 @@ if not DATABASE_URL:
 
 engine = create_engine(
     DATABASE_URL,
-    pool_pre_ping=True,
-    pool_recycle=300,
+    poolclass=NullPool,
     connect_args={"sslmode": "require"}
 )
 
